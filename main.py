@@ -9,8 +9,6 @@ def main():
         winner = None
         board = game.generate_board()
         
-        tui.clear_screen()
-        
         tui.display_board(board)
         
         while True:
@@ -37,8 +35,6 @@ def main():
                 
                 print("debug")
                 
-                tui.clear_screen()
-                
                 tui.display_board(board)
                 
                 if win:
@@ -49,8 +45,7 @@ def main():
         
         tui.spacer()
                 
-        print(f"{winner} hat gewonnen!")
-        
+        tui.print_winner(winner)
     
         if not tui.play_again():
             break

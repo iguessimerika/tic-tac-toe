@@ -35,6 +35,8 @@ def display_player_turn(player):
 
 
 def display_board(board):
+    clear_screen()
+    
     border = "     +---+---+---+"
     
     # top row - numbers for columns
@@ -63,6 +65,9 @@ def position_entry():
 
 def position_error():
     print("Inkorrekte Position, bitte erneut versuchen.")
+    
+def print_winner(name):
+    print(f"Glückwunsch, {name} hat gewonnen!")
 
 def play_again():
     again = input("Erneut spielen (y/n)? ")
