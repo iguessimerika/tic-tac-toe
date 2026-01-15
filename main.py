@@ -7,6 +7,8 @@ def main():
     
         players = tui.player_entry()
         winner = None
+        win = False
+        tie = False
         board = game.generate_board()
         
         tui.display_board(board)
@@ -16,10 +18,11 @@ def main():
                 player_data = players.get(player)
                 name = player_data.get("name")
                 symbol = player_data.get("symbol")
+                color = player_data.get("color")
                 
                 tui.spacer()
                 
-                tui.display_player_turn(name)
+                tui.display_player_turn(name, color)
                 
                 while True:
                     [row, column] = tui.position_entry()
@@ -29,23 +32,26 @@ def main():
                     else:
                         tui.position_error()
                         
-                board = game.play_turn(board, symbol, row, column)
+                board = game.play_turn(board, symbol, row, column, color)
                 
-                win = game.check_win(board)
+                tie = game.check_tie(board)
                 
-                print("debug")
-                
-                tui.display_board(board)
-                
-                if win:
-                    winner = name
+                if not tie:
+                    win = game.check_win(board)
+                    
+                    tui.display_board(board)
+                    
+                    if win:
+                        winner = name
+                        break
+                else:
                     break
-            if win:
+            if win or tie:
                 break
         
         tui.spacer()
                 
-        tui.print_winner(winner)
+        tui.print_result(win, winner)
     
         if not tui.play_again():
             break

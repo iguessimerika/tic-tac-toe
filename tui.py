@@ -1,7 +1,10 @@
 import os
+import rich
+from rich.prompt import Prompt
 
 def starting_screen():
-    print(f"{"="*6} TIC TAC TOE {"="*6}")
+    clear_screen()
+    print(f"{"="*6} TIC TAC TOE {"="*6}\n")
 
     
 def clear_screen():
@@ -19,33 +22,36 @@ def player_entry():
     player_data = {
         "player1": {
             "name": player1,
-            "symbol": "X"
+            "symbol": "X",
+            "color": "blue"
         },
         "player2": {
             "name": player2,
-            "symbol": "O"
+            "symbol": "O",
+            "color": "red"
         }
     }
     
     return player_data
 
 
-def display_player_turn(player):
-    print(f"{player}, du bist dran!")
+def display_player_turn(player, color):
+    rich.print(f"[{color}]{player}[/{color}], du bist dran!")
 
 
 def display_board(board):
-    clear_screen()
+    starting_screen()
+    spacer()
     
     border = "     +---+---+---+"
     
     # top row - numbers for columns
-    print("       1   2   3")
+    rich.print("[bold yellow]       1   2   3[/bold yellow]")
     print(border)
     
     curr_row = 1
     for row in board:
-        print(f"  {curr_row}  | {row[0]} | {row[1]} | {row[2]} |")
+        rich.print(f"  {curr_row}  | {row[0]} | {row[1]} | {row[2]} |")
         print(border)
         
         curr_row += 1
@@ -54,20 +60,23 @@ def display_board(board):
 def position_entry():
     while True:
         try:
-            row = int(input("Zeile angeben (1-3): "))-1
-            column = int(input("Spalte angeben (1-3): "))-1
+            row = int(Prompt.ask("[bold cyan]Zeile[/bold cyan] angeben (1-3): "))-1
+            column = int(Prompt.ask("[bold yellow]Spalte[/bold yellow] angeben (1-3): "))-1
             
             break
         except ValueError:
-            print("Bitte eine gültige Zahl eingeben.")
+            print("Ungültige Zahl. Erneute Eingabe erforderlich.")
     
     return [row, column]
 
 def position_error():
     print("Inkorrekte Position, bitte erneut versuchen.")
     
-def print_winner(name):
-    print(f"Glückwunsch, {name} hat gewonnen!")
+def print_result(win, winner):
+    if win:
+        rich.print(f"[bold green]Glückwunsch, {winner} hat gewonnen!")
+    else:
+        print("Unentschieden!")
 
 def play_again():
     again = input("Erneut spielen (y/n)? ")
