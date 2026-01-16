@@ -1,9 +1,11 @@
 import re
 
 def generate_board():
+    """generates a 2d array, which is the template for an empty tic tac toe board"""
     return [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 
 def check_position(row, column, board):
+    """checks if the position entered by the player is valid to play"""
     valid_position = True
     try:
         position = board[row][column]
@@ -16,11 +18,13 @@ def check_position(row, column, board):
     return valid_position
 
 def play_turn(board, symbol, row, column, color):
+    """marks the entered position with the players symbol"""
     board[row][column] = f"[{color}]{symbol}[/{color}]"
     
     return board
 
 def check_win(board):
+    """checks the board if there are three of the same symbol vertically, horizontally oder diagonally"""
     win = False
     
     # check vertically
@@ -39,6 +43,7 @@ def check_win(board):
     return win
 
 def check_tie(board):
+    """checks the board if no positions are empty and there is a tie"""
     tie = True
             
     if any(" " in row for row in board):
@@ -53,16 +58,19 @@ def symbol(cell):
     return re.sub(r"\[.*?\]", "", cell)
 
 def is_win(cells):
+    """Returns true, if there are 3 of the same symbols in a row"""
     symbols = [symbol(c) for c in cells]
     return len(set(symbols)) == 1 and symbols[0] in ("X", "O")
 
 def highlight(cells):
+    """Returns the given cells highlighted in bold green to show the win"""
     symbols = [symbol(c) for c in cells]
     return [f"[bold green]{s}[/bold green]" for s in symbols]
 
 
 
 def check_vertical(board):
+    """checks if there is a vertical win on the board"""
     win = False
     
     for r, row in enumerate(board):
@@ -74,6 +82,7 @@ def check_vertical(board):
     return win
 
 def check_horizontal(board):
+    """checks if there is a horizontal win on the board"""
     win = False
     
     for col in range(3):
@@ -90,6 +99,7 @@ def check_horizontal(board):
     return win
 
 def check_diagonal(board):
+    """checks if there is a diagonal win on the board"""
     win = False
     
     # left top to right bottom (\)
