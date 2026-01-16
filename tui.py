@@ -68,8 +68,8 @@ def position_entry():
     """asks the player for the entry of the position"""
     while True:
         try:
-            row = int(Prompt.ask("[bold cyan]Zeile[/bold cyan] angeben (1-3): "))-1
-            column = int(Prompt.ask("[bold yellow]Spalte[/bold yellow] angeben (1-3): "))-1
+            row = int(Prompt.ask("[bold cyan]Zeile[/bold cyan] angeben (1-3)"))-1
+            column = int(Prompt.ask("[bold yellow]Spalte[/bold yellow] angeben (1-3)"))-1
             
             break
         except ValueError:
